@@ -13,6 +13,7 @@ and a full suite of unit tests, resulting in near 100% coverage.
   * Run Application.java in the IDE
   * Or build and start the server from the command-line (Maven Required): 
     
+    set spring.profiles.active=dev (or qa)  
     mvn clean package && java -jar target/ThymeleafDemo-1.0.0.war
     
 * Go to [http://localhost:8080/thymeleafDemo/main](http://localhost:8080/thymeleafDemo/main)
