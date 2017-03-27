@@ -10,10 +10,18 @@ and a full suite of unit tests, resulting in near 100% coverage.
 ## Start Instructions
 
 * Start Application
+  * Define the Spring profile to use in the environment:  
+    set spring.profiles.active=dev (or qa)
+    
+    Or use -Dspring.profiles.active=dev when issuing mvn and java commands. But
+    I find that defining dev by default is ok. When I need to test in QA mode, 
+    I'll customize the IDE Run Configuration to set the variable just for that
+    configuration.
+    
   * Run Application.java in the IDE
+  
   * Or build and start the server from the command-line (Maven Required): 
     
-    set spring.profiles.active=dev (or qa)  
     mvn clean package && java -jar target/ThymeleafDemo-1.0.0.war
     
 * Go to [http://localhost:8080/thymeleafDemo/main](http://localhost:8080/thymeleafDemo/main)
