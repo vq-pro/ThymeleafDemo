@@ -1,0 +1,12 @@
+# PostgreSQL Database
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    driverClassName: org.postgresql.Driver
+    username: ${postgres-user}
+    password: ${postgres-pwd}
+
+  jpa.hibernate.ddl-auto: none
+
+flyway.validateOnMigrate: false
+hibernate.id.new_generator_mappings: false

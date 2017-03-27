@@ -1,0 +1,40 @@
+# Log
+logging:
+  level.: INFO
+  level.org.springframework.web: WARN
+  level.org.hibernate: WARN
+
+  level.org.hibernate.SQL: WARN
+  level.org.hibernate.type.descriptor.sql.BasicBinder: WARN
+  level.org.hibernate.type: WARN
+
+spring.jpa:
+  show-sql: false
+  properties.hibernate.format_sql: false
+
+# Server
+hostname: http://localhost
+server:
+  port: 8080
+  sessionTimeout: 30
+
+# Tomcat
+tomcat:
+  accessLogEnabled: false
+  protocolHeader: x-forwarded-proto
+  remoteIpHeader: x-forwarded-for
+  backgroundProcessorDelay: 30
+
+# === Backend ===
+
+# To be replaced by profile-specific data
+# Set the default profile as an environment variable on the machine (spring.profiles.active).
+# To override, modify the Run Configuration, adding build the VM options as:
+# -Dspring.profiles.active=XX
+spring:
+  datasource.driverClassName: MUST_USE_PROFILE
+
+# === UI ===
+spring.view:
+  prefix: templates/
+  suffix: .html

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{${main.MSG_TITLE}}"></title>
+</head>
+
+<body>
+
+<div hidden="hidden"
+     id="VIEW_NAME"
+     th:text="${main.VIEW_NAME}"></div>
+
+<h1 th:text="#{${main.MSG_TITLE}}"></h1>
+
+<h3 th:if="${#lists.isEmpty(items)}"
+    id="idNoItemsMsg"
+    th:text="#{${main.MSG_NO_ITEMS}}"></h3>
+
+<ul>
+    <li th:each="item : ${items}">
+
+        <label id="idItem"
+               th:text="${item.text}"></label>
+
+        <button type="button"
+                th:id="'idButtonDelete' + ${item.id}"
+                th:text="#{${main.MSG_BUTTON_DELETE}}"
+                th:onclick="'deleteItem(' + ${item.id} + ')'"></button>
+    </li>
+</ul>
+
+<button type="button"
+        id="idButtonAdd"
+        th:text="#{${main.MSG_BUTTON_ADD}}"
+        onclick="addItem()"></button>
+
+<script th:inline="javascript">
+
+/*<![CDATA[*/
+
+function goto(url, param)
+{
+    window.location = url + '/' + param;
+}
+
+function addItem()
+{
+    var name = prompt([[#{${main.MSG_PROMPT_ADD_ITEM}}]], '');
+
+    if (!!name && !!name.trim())
+    {
+        goto([[${main.URL_ITEM_ADD}]], name);
+    }
+}
+
+function deleteItem(idItem)
+{
+    goto([[${main.URL_ITEM_DELETE}]], idItem);
+}
+
+
+
+/*]]>*/
+
+</script>
+
+</body>
+</html>
