@@ -18,7 +18,7 @@ public class ListMatcherUtil
             matchers.add(equalTo(item));
         }
 
-        return new IsEqual(null)
+        return new IsEqual(IsEqual.equalTo(expectedItems))
         {
             @Override
             public boolean matches(Object actualValue)
