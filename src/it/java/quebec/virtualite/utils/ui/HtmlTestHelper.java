@@ -159,10 +159,10 @@ public class HtmlTestHelper implements HtmlTestHelperFunctions
     }
 
     @Override
-    public void hidden(String id)
+    public void hidden(String idElement)
     {
-        assertFalse("Expecting " + id + " build be hidden, but it's there!",
-            exists(id));
+        assertFalse("Expecting " + idElement + " build be hidden, but it's there!",
+            exists(idElement));
     }
 
     @Override
@@ -206,10 +206,10 @@ public class HtmlTestHelper implements HtmlTestHelperFunctions
     }
 
     @Override
-    public void shown(String id)
+    public void shown(String idElement)
     {
-        assertTrue("Expecting " + id + " but it's not there!",
-            exists(id));
+        assertTrue("Expecting " + idElement + " but it's not there!",
+            exists(idElement));
     }
 
     @Override

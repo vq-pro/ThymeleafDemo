@@ -9,7 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.ModelMap;
 import quebec.virtualite.thymeleafdemo.backend.data.Item;
 import quebec.virtualite.thymeleafdemo.backend.services.RestClient;
-import quebec.virtualite.utils.ui.ViewObject;
+import quebec.virtualite.utils.ui.vo.ViewObject;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

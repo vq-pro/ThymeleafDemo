@@ -1,7 +1,6 @@
-package quebec.virtualite.utils.ui;
+package quebec.virtualite.utils.ui.vo;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
+import static java.lang.String.format;
 
 public class ViewObject
 {
@@ -29,6 +28,6 @@ public class ViewObject
     @Override
     public String toString()
     {
-        return reflectionToString(this, SHORT_PREFIX_STYLE);
+        return format("ViewObject[id=%d,text=%s]", id, text);
     }
 }

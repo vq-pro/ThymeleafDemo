@@ -1,4 +1,4 @@
-package quebec.virtualite.utils.ui;
+package quebec.virtualite.utils.ui.vo;
 
 import org.junit.Test;
 
@@ -10,8 +10,7 @@ public class ViewObjectTest
     @Test
     public void toString_verifyOutput() throws Exception
     {
-        ViewObject vo = new ViewObject(1, "A");
-
-        assertThat(vo.toString(), is("ViewObject[id=1,text=A]"));
+        assertThat(new ViewObject(1, "A").toString(),
+            is("ViewObject[id=1,text=A]"));
     }
 }

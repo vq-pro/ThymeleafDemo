@@ -1,4 +1,4 @@
-Feature: ThymeleafDemo
+Feature: UI
 
   Scenario Outline: Viewing items
 

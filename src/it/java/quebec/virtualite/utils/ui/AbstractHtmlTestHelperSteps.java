@@ -123,9 +123,9 @@ public class AbstractHtmlTestHelperSteps implements HtmlTestHelperFunctions
     }
 
     @Override
-    public void hidden(String id)
+    public void hidden(String idElement)
     {
-        htmlTestHelper.hidden(id);
+        htmlTestHelper.hidden(idElement);
     }
 
     @Override
@@ -159,9 +159,9 @@ public class AbstractHtmlTestHelperSteps implements HtmlTestHelperFunctions
     }
 
     @Override
-    public void shown(String id)
+    public void shown(String idElement)
     {
-        htmlTestHelper.shown(id);
+        htmlTestHelper.shown(idElement);
     }
 
     @Override
