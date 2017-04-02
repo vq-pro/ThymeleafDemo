@@ -11,12 +11,17 @@ import quebec.virtualite.thymeleafdemo.backend.data.Item;
 import quebec.virtualite.thymeleafdemo.backend.services.RestClient;
 import quebec.virtualite.utils.ui.vo.ViewObject;
 
+import static java.lang.String.format;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static quebec.virtualite.thymeleafdemo.ui.view.MainView.BEAN;
+import static quebec.virtualite.thymeleafdemo.ui.view.MainView.PROP_ITEMS;
+import static quebec.virtualite.thymeleafdemo.ui.view.MainView.VIEW_NAME;
+import static quebec.virtualite.utils.MatcherUtil.isArrayAsStrings;
 import static quebec.virtualite.utils.ui.ViewControllerUtil.urlEncode;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -95,13 +100,13 @@ public class MainViewControllerTest
         outputViewName = viewController.enterView(outputModel);
 
         // Then
-        assertThat(outputViewName, is(quebec.virtualite.thymeleafdemo.ui.view.MainView.VIEW_NAME));
-        assertThat(outputModel.get(quebec.virtualite.thymeleafdemo.ui.view.MainView.BEAN), is(new quebec.virtualite.thymeleafdemo.ui.view.MainView()));
+        assertThat(outputViewName, is(VIEW_NAME));
+        assertThat(outputModel.get(BEAN), is(new MainView()));
 
-        assertThat(outputModel.get(quebec.virtualite.thymeleafdemo.ui.view.MainView.PROP_ITEMS),
-            is(new ViewObject[]{
-                new ViewObject(ID_ITEM_A, ITEM_NAME_A),
-                new ViewObject(ID_ITEM_B, ITEM_NAME_B),
-                new ViewObject(ID_ITEM_C, ITEM_NAME_C)}));
+        assertThat((ViewObject[]) outputModel.get(PROP_ITEMS),
+            isArrayAsStrings(
+                format("ViewObject[id=%d,text=%s]", ID_ITEM_A, ITEM_NAME_A),
+                format("ViewObject[id=%d,text=%s]", ID_ITEM_B, ITEM_NAME_B),
+                format("ViewObject[id=%d,text=%s]", ID_ITEM_C, ITEM_NAME_C)));
     }
 }

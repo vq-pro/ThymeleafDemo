@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-public class RestClientUtilImplTest
+public class RestClientUtilImplIT
 {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();

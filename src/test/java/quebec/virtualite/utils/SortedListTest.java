@@ -8,7 +8,7 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static quebec.virtualite.utils.ListMatcherUtil.isList;
+import static quebec.virtualite.utils.MatcherUtil.isList;
 
 public class SortedListTest
 {

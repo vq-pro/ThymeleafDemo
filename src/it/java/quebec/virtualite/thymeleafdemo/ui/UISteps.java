@@ -26,7 +26,7 @@ import static quebec.virtualite.thymeleafdemo.ui.view.MainView.ID_ITEM;
 import static quebec.virtualite.thymeleafdemo.ui.view.MainView.ID_NO_ITEMS_MSG;
 import static quebec.virtualite.thymeleafdemo.ui.view.MainView.URL_MAINVIEW;
 import static quebec.virtualite.thymeleafdemo.ui.view.MainView.VIEW_NAME;
-import static quebec.virtualite.utils.ListMatcherUtil.isList;
+import static quebec.virtualite.utils.MatcherUtil.isList;
 
 @ContextConfiguration(classes = Application.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)

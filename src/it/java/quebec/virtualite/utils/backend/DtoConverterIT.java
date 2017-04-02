@@ -11,7 +11,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
-public class DtoConverterTest
+public class DtoConverterIT
 {
     private ParentDB inputDB;
 
