@@ -28,6 +28,6 @@ public class ViewObject
     @Override
     public String toString()
     {
-        return format("ViewObject[id=%d,text=%s]", id, text);
+        return format("(%d, %s)", id, text);
     }
 }

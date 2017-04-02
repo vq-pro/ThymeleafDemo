@@ -105,8 +105,8 @@ public class MainViewControllerTest
 
         assertThat((ViewObject[]) outputModel.get(PROP_ITEMS),
             isArrayAsStrings(
-                format("ViewObject[id=%d,text=%s]", ID_ITEM_A, ITEM_NAME_A),
-                format("ViewObject[id=%d,text=%s]", ID_ITEM_B, ITEM_NAME_B),
-                format("ViewObject[id=%d,text=%s]", ID_ITEM_C, ITEM_NAME_C)));
+                format("(%d, %s)", ID_ITEM_A, ITEM_NAME_A),
+                format("(%d, %s)", ID_ITEM_B, ITEM_NAME_B),
+                format("(%d, %s)", ID_ITEM_C, ITEM_NAME_C)));
     }
 }
