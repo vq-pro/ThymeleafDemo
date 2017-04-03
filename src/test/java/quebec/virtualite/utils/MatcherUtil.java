@@ -11,7 +11,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class MatcherUtil
 {
-    public static <E> Matcher<E[]> isArrayAsStrings(String... expectedToStrings)
+    public static <E> Matcher<E[]> hasToStringArray(String... expectedToStrings)
     {
         List<Matcher<? super E>> matchers = new ArrayList<>();
         for (String expectedToString : expectedToStrings)
@@ -42,6 +42,37 @@ public class MatcherUtil
         };
     }
 
+    public static <E> Matcher<List<E>> hasToStringList(String... expectedToStrings)
+    {
+        List<Matcher<? super E>> matchers = new ArrayList<>();
+        for (String expectedToString : expectedToStrings)
+        {
+            matchers.add(HasToString.hasToString(expectedToString));
+        }
+
+        return new IsEqual(IsEqual.equalTo(expectedToStrings))
+        {
+            @Override
+            public boolean matches(Object actualValue)
+            {
+                List<E> actualItems = (List<E>) actualValue;
+
+                if (actualItems.size() != expectedToStrings.length)
+                    return false;
+
+                for (int i = 0; i < expectedToStrings.length; i++)
+                {
+                    Matcher<? super E> matcher = matchers.get(i);
+
+                    if (!matcher.matches(actualItems.get(i)))
+                        return false;
+                }
+
+                return true;
+            }
+        };
+    }
+
     public static <E> Matcher<Iterable<? extends E>> isList(E... expectedItems)
     {
         List<Matcher<? super E>> matchers = new ArrayList<>();
@@ -61,37 +92,6 @@ public class MatcherUtil
                     return false;
 
                 for (int i = 0; i < expectedItems.length; i++)
-                {
-                    Matcher<? super E> matcher = matchers.get(i);
-
-                    if (!matcher.matches(actualItems.get(i)))
-                        return false;
-                }
-
-                return true;
-            }
-        };
-    }
-
-    public static <E> Matcher<List<E>> isListAsStrings(String... expectedToStrings)
-    {
-        List<Matcher<? super E>> matchers = new ArrayList<>();
-        for (String expectedToString : expectedToStrings)
-        {
-            matchers.add(HasToString.hasToString(expectedToString));
-        }
-
-        return new IsEqual(IsEqual.equalTo(expectedToStrings))
-        {
-            @Override
-            public boolean matches(Object actualValue)
-            {
-                List<E> actualItems = (List<E>) actualValue;
-
-                if (actualItems.size() != expectedToStrings.length)
-                    return false;
-
-                for (int i = 0; i < expectedToStrings.length; i++)
                 {
                     Matcher<? super E> matcher = matchers.get(i);
 

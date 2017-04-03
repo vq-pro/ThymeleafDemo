@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 import static quebec.virtualite.thymeleafdemo.ui.view.MainView.BEAN;
 import static quebec.virtualite.thymeleafdemo.ui.view.MainView.PROP_ITEMS;
 import static quebec.virtualite.thymeleafdemo.ui.view.MainView.VIEW_NAME;
-import static quebec.virtualite.utils.MatcherUtil.isArrayAsStrings;
+import static quebec.virtualite.utils.MatcherUtil.hasToStringArray;
 import static quebec.virtualite.utils.ui.ViewControllerUtil.urlEncode;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -104,7 +104,7 @@ public class MainViewControllerTest
         assertThat(outputModel.get(BEAN), is(new MainView()));
 
         assertThat((ViewObject[]) outputModel.get(PROP_ITEMS),
-            isArrayAsStrings(
+            hasToStringArray(
                 format("(%d, %s)", ID_ITEM_A, ITEM_NAME_A),
                 format("(%d, %s)", ID_ITEM_B, ITEM_NAME_B),
                 format("(%d, %s)", ID_ITEM_C, ITEM_NAME_C)));

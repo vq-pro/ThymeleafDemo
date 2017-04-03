@@ -14,18 +14,6 @@ public class ViewObject
     }
 
     @Override
-    public boolean equals(Object thatObject)
-    {
-        if (!(thatObject instanceof ViewObject))
-            return false;
-
-        ViewObject that = (ViewObject) thatObject;
-
-        return (this.id == that.id)
-               && (this.text.equals(that.text));
-    }
-
-    @Override
     public String toString()
     {
         return format("(%d, %s)", id, text);

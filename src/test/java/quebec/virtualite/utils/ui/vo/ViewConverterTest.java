@@ -8,7 +8,9 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.object.HasToString.hasToString;
 import static org.junit.Assert.assertThat;
+import static quebec.virtualite.utils.MatcherUtil.hasToStringArray;
 
 public class ViewConverterTest
 {
@@ -25,9 +27,9 @@ public class ViewConverterTest
 
         // Then
         assertThat(views,
-            is(new ViewObject[]{
-                new ViewObject(1, "A"),
-                new ViewObject(2, "B")}));
+            hasToStringArray(
+                "(1, A)",
+                "(2, B)"));
     }
 
     @Test
@@ -65,9 +67,9 @@ public class ViewConverterTest
 
         // Then
         assertThat(views,
-            is(new ViewObject[]{
-                new ViewObject(1, "A"),
-                new ViewObject(2, "B")}));
+            hasToStringArray(
+                "(1, A)",
+                "(2, B)"));
     }
 
     @Test
@@ -102,8 +104,7 @@ public class ViewConverterTest
         ViewObject view = ViewConverter.view(entity, EntityVO::new);
 
         // Then
-        assertThat(view,
-            is(new ViewObject(1, "A")));
+        assertThat(view, hasToString("(1, A)"));
     }
 
     private class Entity

@@ -24,7 +24,7 @@ public class MatcherUtilTest
         assertThat(new MyObject[]{
                 new MyObject(1),
                 new MyObject(2)},
-            MatcherUtil.isArrayAsStrings("1", "3"));
+            MatcherUtil.hasToStringArray("1", "3"));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class MatcherUtilTest
             "\nExpected: <[\"1\", \"2\"]>\n     but: was [<1>]");
 
         assertThat(new MyObject[]{new MyObject(1)},
-            MatcherUtil.isArrayAsStrings("1", "2"));
+            MatcherUtil.hasToStringArray("1", "2"));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class MatcherUtilTest
             "\nExpected: <[\"1\", \"3\"]>\n     but: was <[1, 2]>");
 
         assertThat(asList(new MyObject(1), new MyObject(2)),
-            MatcherUtil.isListAsStrings("1", "3"));
+            MatcherUtil.hasToStringList("1", "3"));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class MatcherUtilTest
             "\nExpected: <[\"1\", \"2\"]>\n     but: was <[1]>");
 
         assertThat(asList(new MyObject(1)),
-            MatcherUtil.isListAsStrings("1", "2"));
+            MatcherUtil.hasToStringList("1", "2"));
     }
 
     @Test
