@@ -23,6 +23,8 @@ public interface HtmlTestHelperFunctions
 
     List<String> elementsText(String id);
 
+    List<String> elementsValue(String id);
+
     void emptyList(String idList);
 
     boolean exists(String id);

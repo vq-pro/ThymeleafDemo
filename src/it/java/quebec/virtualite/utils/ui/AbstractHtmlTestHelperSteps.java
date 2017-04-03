@@ -56,6 +56,12 @@ public class AbstractHtmlTestHelperSteps implements HtmlTestHelperFunctions
     }
 
     @Override
+    public List<String> elementsValue(String id)
+    {
+        return htmlTestHelper.elementsValue(id);
+    }
+
+    @Override
     public void emptyList(String idList)
     {
         htmlTestHelper.emptyList(idList);

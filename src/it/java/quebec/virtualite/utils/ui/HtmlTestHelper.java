@@ -92,8 +92,19 @@ public class HtmlTestHelper implements HtmlTestHelperFunctions
     @Override
     public List<String> elementsText(String id)
     {
-        return elements(id).stream()
+        return elements(id)
+            .stream()
             .map(DomNode::getTextContent)
+            .map(String::trim)
+            .collect(toList());
+    }
+
+    @Override
+    public List<String> elementsValue(String id)
+    {
+        return elements(id)
+            .stream()
+            .map(element -> element.getAttribute("value"))
             .map(String::trim)
             .collect(toList());
     }
