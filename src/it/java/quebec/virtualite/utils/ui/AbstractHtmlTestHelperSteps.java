@@ -1,8 +1,7 @@
 package quebec.virtualite.utils.ui;
 
 import com.gargoylesoftware.htmlunit.html.DomElement;
-import com.gargoylesoftware.htmlunit.html.DomNodeList;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlOption;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -75,24 +74,6 @@ public class AbstractHtmlTestHelperSteps implements HtmlTestHelperFunctions
     }
 
     @Override
-    public void expectPromptCancel()
-    {
-        htmlTestHelper.expectPromptCancel();
-    }
-
-    @Override
-    public void expectPromptOK(String result)
-    {
-        htmlTestHelper.expectPromptOK(result);
-    }
-
-    @Override
-    public void verifyPrompt(String expectedMessage)
-    {
-        htmlTestHelper.verifyPrompt(expectedMessage);
-    }
-
-    @Override
     public void expectConfirmCancel()
     {
         htmlTestHelper.expectConfirmCancel();
@@ -102,6 +83,18 @@ public class AbstractHtmlTestHelperSteps implements HtmlTestHelperFunctions
     public void expectConfirmOK()
     {
         htmlTestHelper.expectConfirmOK();
+    }
+
+    @Override
+    public void expectPromptCancel()
+    {
+        htmlTestHelper.expectPromptCancel();
+    }
+
+    @Override
+    public void expectPromptOK(String result)
+    {
+        htmlTestHelper.expectPromptOK(result);
     }
 
     @Override
@@ -129,6 +122,12 @@ public class AbstractHtmlTestHelperSteps implements HtmlTestHelperFunctions
     }
 
     @Override
+    public String idWithParam(String idElement, long idEntity)
+    {
+        return htmlTestHelper.idWithParam(idElement, idEntity);
+    }
+
+    @Override
     public String message(String key)
     {
         return htmlTestHelper.message(key);
@@ -141,7 +140,13 @@ public class AbstractHtmlTestHelperSteps implements HtmlTestHelperFunctions
     }
 
     @Override
-    public DomNodeList<HtmlElement> options(String idSelect)
+    public String optionSelected(String idSelect)
+    {
+        return htmlTestHelper.optionSelected(idSelect);
+    }
+
+    @Override
+    public List<HtmlOption> options(String idSelect)
     {
         return htmlTestHelper.options(idSelect);
     }
@@ -156,6 +161,12 @@ public class AbstractHtmlTestHelperSteps implements HtmlTestHelperFunctions
     public HtmlPage selectOption(String idSelect, long idOption) throws IOException
     {
         return htmlTestHelper.selectOption(idSelect, idOption);
+    }
+
+    @Override
+    public HtmlPage selectOption(String idSelect, String textOption) throws IOException
+    {
+        return htmlTestHelper.selectOption(idSelect, textOption);
     }
 
     @Override
@@ -183,8 +194,8 @@ public class AbstractHtmlTestHelperSteps implements HtmlTestHelperFunctions
     }
 
     @Override
-    public String idWithParam(String idElement, long idEntity)
+    public void verifyPrompt(String expectedMessage)
     {
-        return htmlTestHelper.idWithParam(idElement, idEntity);
+        htmlTestHelper.verifyPrompt(expectedMessage);
     }
 }

@@ -3,8 +3,8 @@ package quebec.virtualite.utils.ui;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.DomNode;
-import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlOption;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
+import static junit.framework.TestCase.fail;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
@@ -58,9 +60,9 @@ public class HtmlTestHelper implements HtmlTestHelperFunctions
     }
 
     @Override
-    public DomElement element(String id)
+    public HtmlElement element(String id)
     {
-        DomElement element = page.getElementById(id);
+        HtmlElement element = (HtmlElement) page.getElementById(id);
         assertNotNull("element '" + id + "' not found", element);
 
         return element;
@@ -166,6 +168,12 @@ public class HtmlTestHelper implements HtmlTestHelperFunctions
     }
 
     @Override
+    public String idWithParam(String idElement, long idEntity)
+    {
+        return idElement + String.valueOf(idEntity);
+    }
+
+    @Override
     public String message(String key)
     {
         return messageSource.getMessage(key, null, Locale.getDefault());
@@ -178,15 +186,31 @@ public class HtmlTestHelper implements HtmlTestHelperFunctions
     }
 
     @Override
-    public DomNodeList<HtmlElement> options(String idSelect)
+    public String optionSelected(String idSelect)
     {
-        return element(idSelect).getElementsByTagName("option");
+        return options(idSelect)
+            .stream()
+            .filter(HtmlOption::isSelected)
+            .findFirst()
+            .map(htmlOption -> htmlOption.getAttribute("value"))
+            .orElse(null);
+    }
+
+    @Override
+    public List<HtmlOption> options(String idSelect)
+    {
+        return element(idSelect)
+            .getElementsByTagName("option")
+            .stream()
+            .map(htmlElement -> (HtmlOption) htmlElement)
+            .collect(toList());
     }
 
     @Override
     public List<String> optionsText(String idSelect)
     {
-        return options(idSelect).stream()
+        return options(idSelect)
+            .stream()
             .map(DomNode::getTextContent)
             .collect(toList());
     }
@@ -194,7 +218,13 @@ public class HtmlTestHelper implements HtmlTestHelperFunctions
     @Override
     public HtmlPage selectOption(String idSelect, long idOption) throws IOException
     {
-        for (HtmlElement option : options(idSelect))
+        return selectOption(idSelect, String.valueOf(idOption));
+    }
+
+    @Override
+    public HtmlPage selectOption(String idSelect, String idOption) throws IOException
+    {
+        for (HtmlOption option : options(idSelect))
         {
             if (option.getAttribute("value").equals(String.valueOf(idOption)))
             {
@@ -202,6 +232,7 @@ public class HtmlTestHelper implements HtmlTestHelperFunctions
             }
         }
 
+        fail(format("Option '%s' not found in select '%s'", idOption, idSelect));
         return null;
     }
 
@@ -249,12 +280,6 @@ public class HtmlTestHelper implements HtmlTestHelperFunctions
             actualPromptMessage, is(expectedMessage));
 
         actualPromptMessage = null;
-    }
-
-    @Override
-    public String idWithParam(String idElement, long idEntity)
-    {
-        return idElement + String.valueOf(idEntity);
     }
 
     @PreDestroy

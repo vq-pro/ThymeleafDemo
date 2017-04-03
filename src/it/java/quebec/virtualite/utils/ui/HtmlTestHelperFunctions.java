@@ -1,8 +1,7 @@
 package quebec.virtualite.utils.ui;
 
 import com.gargoylesoftware.htmlunit.html.DomElement;
-import com.gargoylesoftware.htmlunit.html.DomNodeList;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlOption;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 import java.io.IOException;
@@ -46,15 +45,21 @@ public interface HtmlTestHelperFunctions
 
     void hidden(String idButton);
 
+    String idWithParam(String idElement, long idEntity);
+
     String message(String key);
 
     void onView(String viewName);
 
-    DomNodeList<HtmlElement> options(String idSelect);
+    String optionSelected(String idSelect);
+
+    List<HtmlOption> options(String idSelect);
 
     List<String> optionsText(String idSelect);
 
     HtmlPage selectOption(String idSelect, long idOption) throws IOException;
+
+    HtmlPage selectOption(String idSelect, String textOption) throws IOException;
 
     void shown(String idButton);
 
@@ -65,6 +70,4 @@ public interface HtmlTestHelperFunctions
     void verifyConfirm(String expectedMessage);
 
     void verifyPrompt(String expectedMessage);
-
-    String idWithParam(String idElement, long idEntity);
 }
