@@ -27,12 +27,15 @@ tomcat:
 
 # === Backend ===
 
-# To be replaced by profile-specific data
-# Set the default profile as an environment variable on the machine (spring.profiles.active).
-# To override, modify the Run Configuration, adding build the VM options as:
-# -Dspring.profiles.active=XX
+# H2 Database
 spring:
-  datasource.driverClassName: MUST_USE_PROFILE
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:AZ;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+
+  jpa.hibernate.ddl-auto: none
 
 # === UI ===
 spring.view:

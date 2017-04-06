@@ -31,13 +31,11 @@ and a full suite of unit tests, resulting in near 100% coverage.
 * You'll find plenty of unit tests in the src/test/java.
 * All integration tests are run in Maven. In the IDE, launch CucumberIT and
   view the .feature files.
-* There are two Spring profiles in use: dev and qa. DEV uses the H2 memory database,
-  for responsiveness. 
+* By default, an H2 memory database is used for responsiveness. 
   
-  QA is a profile that uses a PostgreSQL database, but feel free to replace the 
-  datasource definition in 
-  _[application-qa.yml](src/main/resources/application-qa.yml)_. To enable a
-  specific profile, use the property 'spring.profiles.active' (or define it as an
+  There is a QA Spring profile that uses a PostgreSQL database, but feel free to replace the 
+  datasource definition in _[application-qa.yml](src/main/resources/application-qa.yml)_. 
+  To enable a specific profile, use the property 'spring.profiles.active' (or define it as an
   environment variable).
   
   With Maven, or through the command-line, use the following:

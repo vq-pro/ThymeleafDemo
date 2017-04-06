@@ -1,8 +1,10 @@
 package quebec.virtualite.thymeleafdemo.backend.services.impl;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import quebec.virtualite.thymeleafdemo.backend.ItemNotFoundException;
 import quebec.virtualite.thymeleafdemo.backend.data.Item;
@@ -18,6 +20,7 @@ import static quebec.virtualite.thymeleafdemo.backend.services.impl.RestClientIm
 import static quebec.virtualite.thymeleafdemo.backend.services.impl.RestURLs.URL_DELETE_ITEM;
 import static quebec.virtualite.thymeleafdemo.backend.services.impl.RestURLs.URL_GET_ITEM;
 
+@RunWith(MockitoJUnitRunner.class)
 public class RestClientImplIT
 {
     @InjectMocks
@@ -52,7 +55,7 @@ public class RestClientImplIT
 
         doThrow(serverError(ItemNotFoundException.class))
             .when(mockedRestClientUtil)
-            .get(URL_GET_ITEM, String.valueOf(ID_ITEM), Item.class);
+            .get(Item.class, URL_GET_ITEM, String.valueOf(ID_ITEM));
 
         // When
         rest.getItem(ID_ITEM);

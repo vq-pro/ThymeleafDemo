@@ -38,7 +38,7 @@ public class RestClientImplTest
         // Given
         Item inputItem = new Item("A");
 
-        when(mockedRestClientUtil.post(URL_ADD_ITEM, inputItem, Item.class))
+        when(mockedRestClientUtil.post(inputItem, Item.class, URL_ADD_ITEM))
             .thenReturn(inputItem);
 
         // When
@@ -79,7 +79,7 @@ public class RestClientImplTest
         // Then
         verify(mockedRestClientUtil).doWithErrorHandling(any());
         verify(mockedRestClientUtil)
-            .get(URL_GET_ITEM, String.valueOf(ID_ITEM), Item.class);
+            .get(Item.class, URL_GET_ITEM, String.valueOf(ID_ITEM));
     }
 
     @Test
@@ -89,7 +89,8 @@ public class RestClientImplTest
         rest.getItems();
 
         // Then
-        verify(mockedRestClientUtil).get(URL_GET_ITEMS, Item[].class);
+        verify(mockedRestClientUtil)
+            .get(Item[].class, URL_GET_ITEMS);
     }
 
     @Test
@@ -103,6 +104,6 @@ public class RestClientImplTest
 
         // Then
         verify(mockedRestClientUtil)
-            .put(URL_UPDATE_ITEM, item);
+            .put(item, URL_UPDATE_ITEM);
     }
 }

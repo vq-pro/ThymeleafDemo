@@ -23,7 +23,7 @@ class RestClientImpl implements RestClient
     @Override
     public Item addItem(Item item)
     {
-        return rest.post(URL_ADD_ITEM, item, Item.class);
+        return rest.post(item, Item.class, URL_ADD_ITEM);
     }
 
     @Override
@@ -31,12 +31,11 @@ class RestClientImpl implements RestClient
     {
         try
         {
-            rest.doWithErrorHandling(
-                () ->
-                {
-                    rest.delete(URL_DELETE_ITEM, String.valueOf(id));
-                    return null;
-                });
+            rest.doWithErrorHandling(() ->
+            {
+                rest.delete(URL_DELETE_ITEM, String.valueOf(id));
+                return null;
+            });
         }
         catch (ServerException e)
         {
@@ -50,7 +49,7 @@ class RestClientImpl implements RestClient
         try
         {
             return rest.doWithErrorHandling(() ->
-                rest.get(URL_GET_ITEM, String.valueOf(id), Item.class));
+                rest.get(Item.class, URL_GET_ITEM, String.valueOf(id)));
         }
         catch (ServerException e)
         {
@@ -62,13 +61,13 @@ class RestClientImpl implements RestClient
     @Override
     public Item[] getItems()
     {
-        return rest.get(URL_GET_ITEMS, Item[].class);
+        return rest.get(Item[].class, URL_GET_ITEMS);
     }
 
     @Override
     public void updateItem(Item item)
     {
-        rest.put(URL_UPDATE_ITEM, item);
+        rest.put(item, URL_UPDATE_ITEM);
     }
 
     private void handleItemNotFoundException(ServerException e) throws ItemNotFoundException

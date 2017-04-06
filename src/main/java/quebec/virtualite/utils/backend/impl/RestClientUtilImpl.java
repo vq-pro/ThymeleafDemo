@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -16,8 +15,6 @@ import quebec.virtualite.utils.backend.InternalServerException;
 import quebec.virtualite.utils.backend.RestClientUtil;
 import quebec.virtualite.utils.backend.RestError;
 import quebec.virtualite.utils.backend.ServerException;
-
-import java.util.LinkedHashMap;
 
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
@@ -33,28 +30,12 @@ public class RestClientUtilImpl implements RestClientUtil
     private Environment environment;
 
     @Override
-    public void delete(String url, LinkedHashMap<String, Object> params)
+    public void delete(String url, String... params)
     {
         checkInit();
 
-        getTemplate().exchange(
-            serverUrl + url + buildUrlParams(params),
-            DELETE,
-            null,
-            Void.class,
-            params);
-    }
-
-    @Override
-    public void delete(String url, String param)
-    {
-        checkInit();
-
-        ResponseEntity<Void> response = getTemplate().exchange(
-            buildPathParamUrl(url, param),
-            DELETE,
-            null,
-            Void.class);
+        getTemplate()
+            .exchange(buildPathParamUrl(url, params), DELETE, null, Void.class);
     }
 
     public <T> T doWithErrorHandling(Command<T> cmd)
@@ -78,22 +59,13 @@ public class RestClientUtilImpl implements RestClientUtil
     }
 
     @Override
-    public <T> T get(final String url, LinkedHashMap<String, Object> params, Class<T> responseType)
+    public <T> T get(String url, String... params)
     {
-        checkInit();
-
-        ResponseEntity<T> response = getTemplate().exchange(
-            serverUrl + url + buildUrlParams(params),
-            GET,
-            null,
-            responseType,
-            params);
-
-        return response.getBody();
+        return get((Class<T>) Void.class, url, params);
     }
 
     @Override
-    public <T> T get(final String url, Class<T> responseType)
+    public <T> T get(Class<T> responseType, String url, String... params)
     {
         //        HttpAuthentication httpAuthentication = new
         // HttpBasicAuthentication("username", "password");
@@ -129,142 +101,74 @@ public class RestClientUtilImpl implements RestClientUtil
 
         checkInit();
 
-        final ResponseEntity<T> response = getTemplate()
+        return getTemplate()
             //            .exchange(serverUrl + buildPathParamUrl, HttpMethod.GET,
             // httpEntity, responseType);
-            .exchange(serverUrl + url, GET, null, responseType);
-
-        return response.getBody();
+            .exchange(buildPathParamUrl(url, params), GET, null, responseType)
+            .getBody();
     }
 
     @Override
-    public <T> T get(String url, String param, Class<T> responseType)
+    public <T> T post(Object entity, String url, String... params)
     {
-        checkInit();
-
-        final ResponseEntity<T> response = getTemplate().exchange(
-            buildPathParamUrl(url, param),
-            GET,
-            null,
-            responseType);
-
-        return response.getBody();
+        return post(entity, (Class<T>) Void.class, url, params);
     }
 
     @Override
-    public <T> T get(String url, String param1, String param2, Class<T> responseType)
+    public <T> T post(Object entity, Class<T> responseType, String url, String... params)
     {
         checkInit();
 
-        final ResponseEntity<T> response = getTemplate()
+        return getTemplate()
             .exchange(
-                buildPathParamUrl(url, param1, param2),
-                GET,
-                null,
-                responseType);
-
-        return response.getBody();
+                buildPathParamUrl(url, params),
+                POST,
+                new HttpEntity<>(entity),
+                responseType)
+            .getBody();
     }
 
     @Override
-    public <T> T post(final String url, final Object entity, Class<T> responseType)
+    public <T> T put(Object entity, String url, String... params)
     {
-        return post(url, "", entity, responseType);
+        return put(entity, (Class<T>) Void.class, url, params);
     }
 
     @Override
-    public <T> T post(final String url, String param, final Object entity, Class<T>
-        responseType)
+    public <T> T put(Object entity, Class<T> responseType, String url, String... params)
     {
-        checkInit();
-
-        ResponseEntity<T> response = getTemplate().exchange(
-            buildPathParamUrl(url, param),
-            POST,
-            new HttpEntity<>(entity),
-            responseType);
-
-        return response.getBody();
-    }
-
-    @Override
-    public void put(final String url, Object entity)
-    {
-        final ResponseEntity<Void> response = getTemplate()
+        return getTemplate()
             .exchange(
-                buildUrl(url),
+                buildPathParamUrl(url, params),
                 PUT,
                 new HttpEntity<>(entity),
-                Void.class);
+                responseType)
+            .getBody();
     }
 
-    // Must use LinkedHashMap parm type build maintain the params
-    // in the order of entry.
-    String buildUrlParams(LinkedHashMap<String, Object> params)
+    private String buildPathParamUrl(String url, String... params)
     {
-        StringBuilder builder = null;
+        StringBuilder builder = new StringBuilder()
+            .append(serverUrl)
+            .append(url);
 
-        for (String parm : params.keySet())
+        for (String param : params)
         {
-            if (builder == null)
-            {
-                builder = new StringBuilder();
-                builder.append("?");
-            }
-            else
-            {
-                builder.append("&");
-            }
-
             builder
-                .append(parm)
-                .append("={")
-                .append(parm)
-                .append("}");
+                .append("/")
+                .append(param);
         }
 
         return builder.toString();
-    }
-
-    private String buildPathParamUrl(String url, String param1)
-    {
-        return new StringBuilder()
-            .append(serverUrl)
-            .append(url)
-            .append("/")
-            .append(param1)
-            .toString();
-    }
-
-    private String buildPathParamUrl(String url, String param1, String param2)
-    {
-        return new StringBuilder()
-            .append(serverUrl)
-            .append(url)
-            .append("/")
-            .append(param1)
-            .append("/")
-            .append(param2)
-            .toString();
-    }
-
-    private String buildUrl(String url)
-    {
-        return new StringBuilder()
-            .append(serverUrl)
-            .append(url)
-            .toString();
     }
 
     private void checkInit()
     {
         if (serverUrl == null)
         {
-            this.serverUrl = new StringBuilder()
-                .append(environment.getProperty("hostname"))
-                .append(":")
-                .append(environment.getProperty("local.server.port"))
-                .toString();
+            this.serverUrl = environment.getProperty("hostname") +
+                             ":" +
+                             environment.getProperty("local.server.port");
         }
     }
 
