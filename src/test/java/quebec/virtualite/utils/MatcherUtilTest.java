@@ -6,6 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertThat;
+import static quebec.virtualite.utils.MatcherUtil.hasToStringArray;
 import static quebec.virtualite.utils.backend.EntityUtils.sameTypes;
 import static quebec.virtualite.utils.backend.EntityUtils.sameValues;
 
@@ -24,7 +25,7 @@ public class MatcherUtilTest
         assertThat(new MyObject[]{
                 new MyObject(1),
                 new MyObject(2)},
-            MatcherUtil.hasToStringArray("1", "3"));
+            hasToStringArray("1", "3"));
     }
 
     @Test
@@ -35,7 +36,7 @@ public class MatcherUtilTest
             "\nExpected: <[\"1\", \"2\"]>\n     but: was [<1>]");
 
         assertThat(new MyObject[]{new MyObject(1)},
-            MatcherUtil.hasToStringArray("1", "2"));
+            hasToStringArray("1", "2"));
     }
 
     @Test

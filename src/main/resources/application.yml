@@ -1,6 +1,6 @@
 # Log
 logging:
-  level.: INFO
+  level.: WARN
   level.org.springframework.web: WARN
   level.org.hibernate: WARN
 
