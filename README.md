@@ -84,7 +84,7 @@ and a full suite of unit tests, resulting in near 100% coverage.
   its end!
   
 * The REST Server is using a DAO, a 
-  _[Database](src/main/java/quebec/virtualite/thymeleafdemo/backend/data/impl/DatabaseImpl.java)_ 
+  _[Database](src/main/java/quebec/virtualite/daily/backend/data/impl/DatabaseImpl.java)_ 
   interface encapsulating all database access. 
   
   Instead of directly using Spring Data Repository interfaces, 
